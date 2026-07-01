@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // eve build/runtime artifacts:
+    ".eve/**",
+    ".output/**",
+    ".workflow-data/**",
   ]),
 ]);
 
