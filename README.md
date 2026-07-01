@@ -1,6 +1,6 @@
 # nextjs-eve-boilerplate
 
-A Next.js app with an [eve](https://www.npmjs.com/package/eve) agent wired in via `withEve()`. The agent runs alongside the Next.js dev server and is reachable same-origin, with a basic chat UI at `/chat`.
+A Next.js app with an [eve](https://www.npmjs.com/package/eve) agent wired in via `withEve()`. The agent runs alongside the Next.js dev server and is reachable same-origin, with a simple chat interface as the homepage.
 
 ## Prerequisites
 
@@ -16,11 +16,11 @@ pnpm exec eve link   # or set a model credential manually, see above
 pnpm dev
 ```
 
-Open [http://localhost:3000/chat](http://localhost:3000/chat) to talk to the agent.
+Open [http://localhost:3000](http://localhost:3000) to talk to the agent.
 
 ## Project layout
 
-- `app/` — the Next.js frontend (App Router). `app/chat/page.tsx` is a minimal chat UI built with `useEveAgent` from `eve/react`.
+- `app/` — the Next.js frontend (App Router). `app/page.tsx` is the chat interface, built with `useEveAgent` from `eve/react`. It doesn't persist messages or threads — refreshing starts a new session.
 - `agent/` — the eve agent, authored as files on disk:
   - `agent.ts` — runtime config (model, etc.)
   - `instructions.md` — the agent's always-on system prompt
