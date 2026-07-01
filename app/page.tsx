@@ -1,9 +1,10 @@
 "use client";
 
-import { PlusIcon } from "lucide-react";
+import { ArrowUpIcon, PlusIcon, SquareIcon, XIcon } from "lucide-react";
 import { useEveAgent } from "eve/react";
 
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { Shimmer } from "@/components/ai-elements/shimmer";
 import {
   Conversation,
@@ -42,19 +43,32 @@ export default function Home() {
     agent.reset();
   }
 
+  const submitIcon =
+    status === "submitted" ? (
+      <Spinner />
+    ) : status === "streaming" ? (
+      <SquareIcon className="size-4" />
+    ) : status === "error" ? (
+      <XIcon className="size-4" />
+    ) : (
+      <ArrowUpIcon className="size-4" />
+    );
+
   const composer = (
-    <PromptInput onSubmit={handleSubmit} className="rounded-full shadow-sm">
+    <PromptInput onSubmit={handleSubmit} className="rounded-full p-2 shadow-sm">
       <PromptInputTextarea
         placeholder="Message the assistant..."
-        className="min-h-11 py-2.5 pr-12 pl-4 text-base"
+        className="min-h-9 py-1.5 pr-2 pl-3 text-base"
         rows={1}
       />
-      <InputGroupAddon align="inline-end" className="pr-1.5">
+      <InputGroupAddon align="inline-end" className="pr-1">
         <PromptInputSubmit
           status={status}
           onStop={() => agent.stop()}
-          className="size-8 rounded-full"
-        />
+          className="size-9 rounded-full"
+        >
+          {submitIcon}
+        </PromptInputSubmit>
       </InputGroupAddon>
     </PromptInput>
   );
