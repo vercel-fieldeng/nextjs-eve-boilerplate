@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# nextjs-eve-boilerplate
 
-## Getting Started
+A Next.js app with an [eve](https://www.npmjs.com/package/eve) agent wired in via `withEve()`. The agent runs alongside the Next.js dev server and is reachable same-origin, with a basic chat UI at `/chat`.
 
-First, run the development server:
+## Prerequisites
+
+- Node 24 (pinned in `.node-version` and `package.json#engines`)
+- pnpm
+- A model credential — either run `pnpm exec eve link` to pull Vercel AI Gateway credentials, or set `AI_GATEWAY_API_KEY` / `ANTHROPIC_API_KEY` in `.env.local`
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+pnpm exec eve link   # or set a model credential manually, see above
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000/chat](http://localhost:3000/chat) to talk to the agent.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/` — the Next.js frontend (App Router). `app/chat/page.tsx` is a minimal chat UI built with `useEveAgent` from `eve/react`.
+- `agent/` — the eve agent, authored as files on disk:
+  - `agent.ts` — runtime config (model, etc.)
+  - `instructions.md` — the agent's always-on system prompt
+  - `channels/eve.ts` — the built-in HTTP channel's auth policy
+  - add `tools/`, `connections/`, `skills/`, etc. here as needed
+- `next.config.ts` — wraps the Next.js config with `withEve()` so the eve routes mount on the same origin (no CORS, no separate URL to configure)
 
-## Learn More
+## Useful commands
 
-To learn more about Next.js, take a look at the following resources:
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Start Next.js and the eve dev server together |
+| `pnpm exec eve info` | Show discovered agent files and diagnostics |
+| `pnpm exec eve dev` | Start eve's standalone terminal UI against the local agent |
+| `pnpm build` | Production build |
+| `pnpm exec eve link` | Link this project to Vercel and pull AI Gateway credentials |
+| `pnpm exec eve deploy` | Deploy the agent + app to Vercel |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Learn more
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [eve docs](https://www.npmjs.com/package/eve) — bundled locally at `node_modules/eve/docs/` once installed
+- [Next.js docs](https://nextjs.org/docs)
