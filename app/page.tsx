@@ -78,6 +78,28 @@ export default function Home() {
 
   return (
     <div className="flex flex-1 flex-col items-center bg-zinc-50 font-sans dark:bg-black">
+      <div className="flex w-full max-w-2xl items-center justify-end px-6 pt-4">
+        <button
+          type="button"
+          onClick={() => agent.reset()}
+          className="flex items-center gap-1.5 rounded-full border border-black/[.08] px-3 py-1.5 text-xs font-medium text-black transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:text-zinc-50 dark:hover:bg-white/[.06]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-3.5 w-3.5"
+          >
+            <path d="M12 5v14" />
+            <path d="M5 12h14" />
+          </svg>
+          New chat
+        </button>
+      </div>
       <div className="flex w-full max-w-2xl flex-1 flex-col gap-6 overflow-y-auto px-6 py-8">
         {agent.data.messages.map((message) => (
           <div
